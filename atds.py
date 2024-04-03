@@ -73,6 +73,7 @@ class Queue:
     def __repr__(self):
         return str(self.que)
         
+
 class Deque:
     def __init__(self):
         self.deque = []
@@ -103,8 +104,6 @@ class Deque:
             return True
         else:
             return False
-
-
 class Node:
     """Defines a node class
     """
@@ -125,8 +124,7 @@ class Node:
         return self.next
     
     def __repr__(self):
-        return "Node[data=" + str(self.data) + ",next=" + str(self.next) + 
-"]"
+        return "Node[data=" + str(self.data) + ",next=" + str(self.next) + "]"
 
 class UnorderedList(object):
     """Defines an unordered (unsorted) list of nodes.
@@ -175,12 +173,9 @@ class UnorderedList(object):
         """
         current = self.head
         previous = None
-        while current != None and self.head != None:    # Have to search 
-entire list
-            if current.get_data() == data:              # need to remove 
-it
-                if previous == None:                    # we're at the 
-head
+        while current != None and self.head != None:    # Have to search entire list
+            if current.get_data() == data:              # need to remove it
+                if previous == None:                    # we're at the head
                     self.head = current.get_next()
                     current = current.get_next()
                 else:
@@ -266,8 +261,7 @@ head
             return result
 
     def __repr__(self):
-        """Creates a representation of the list suitable for printing, 
-debugging.
+        """Creates a representation of the list suitable for printing, debugging.
         """
         result = "UnorderedList["
         next_node = self.head
@@ -276,7 +270,81 @@ debugging.
             next_node = next_node.get_next()
         result = result + "]"
         return result
+    
+class UnorderedListStack(object):
+    """Implements a Stack using the UnorderedList class.
+    """
+    def __init__(self):
+        self.ul = UnorderedList()
+
+    def push(self, item):
+        """Pushes an item onto the top of the stack"""
+        self.ul.add(item)
+
+    def pop(self):
+        """Removes the item at the top of the stack and
+        returns it.
+        """
+        return self.ul.pop(0)
+    
+    def peek(self):
+        """Examines the item at the top of the stack
+        and returns that value. Awkward: we don't have
+        a way to look at data at the beginning of an
+        Unordered List!"""
+        value = self.ul.pop(0)
+        self.ul.add(value)
+        return value
+
+    def size(self):
+        return self.ul.length()
+
+    def is_empty(self):
+        return self.ul.is_empty()
+    
+class HashTable(object):
+
+    def __init__(self, size):
+        """Create empty lists for the Map
+        """
+        self.keys = size * [None]
+        self.data = size * [None]
+        self.size = size
+
+
+    def put(self, key, value):
+        """Creates an entry in the hash table
+        """
+        hash_value = key % self.size  
+        while self.keys[hash_value] != None and self.keys[hash_value] != key:
+            hash_value += 1
+        # We're at a position where we can place the value
+        if self.keys[hash_value] == key: 
+            self.data[hash_value] = value
+        else:
+            # linear probe
+            self.keys[hash_value] = key
+            self.data[hash_value] = value
+    
+
+    def get(self, key):
+        hash_value = key % self.size
+        while self.keys[hash_value] != None and self.keys[hash_value] != key:
+            hash_value += 1
+        if self.keys[hash_value] == key: 
+            return self.data[hash_value]
+        else:
+            return None
+    
+
+    def __str__(self):
+        return "Keys: " + str(self.keys) + "\n" + \
+               "Values: " + str(self.data)
+            
 
 def main():
     # The program goes here
     pass
+
+if __name__ == "__main__":
+    main()
