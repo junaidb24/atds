@@ -340,7 +340,41 @@ class HashTable(object):
     def __str__(self):
         return "Keys: " + str(self.keys) + "\n" + \
                "Values: " + str(self.data)
-            
+        
+
+
+class BinaryTree:
+    def __init__(self, val):
+        self.val = val
+        self.left_child  = None
+        self.right_child = None
+
+    def get_root_val(self):
+        return self.val
+
+    def set_root_val(self, new_val):
+        self.val = new_val
+
+    def get_left_child(self):
+        return self.left_child
+
+    def get_right_child(self):
+        return self.right_child
+    
+    def insert_left(self, val):
+        new_subtree = BinaryTree(val)
+        new_subtree.left_child = self.left_child
+        self.left_child = new_subtree
+
+    def insert_right(self, val):
+        new_subtree = BinaryTree(val)
+        new_subtree.right_child = self.right_child
+        self.right_child = new_subtree
+
+    def __repr__(self):
+        return "BinaryTree[key = " + str(self.val) + \
+        ",left=" + str(self.left_child) + \
+        ", right=" + str(self.right_child) + "]"
 
 def main():
     # The program goes here
